@@ -29,6 +29,7 @@
 /*************************************************************************/
 
 #include "resource_importer_commonmark.h"
+#include "core/error/error_macros.h"
 #include "core/io/file_access_pack.h"
 
 #include "cmark-gfm.h"
@@ -81,15 +82,10 @@ Error ResourceImporterCommonmark::import(const String &p_source_file, const Stri
 	String error_string;
 	int error_line;
 	Variant data;
-	char *cmark_bytes = cmark_markdown_to_html((const char *)string_bytes.ptr(), string_bytes.size(), 0);
-	Vector<char> new_string_bytes;
-	while(cmark_bytes != nullptr) {
-		new_string_bytes.append(*cmark_bytes);
-		cmark_bytes++;
-	}
-	memdelete(cmark_bytes);
+	char *cmark_bytes = cmark_markdown_to_html((const char *)string_bytes.ptr(), string_bytes.size() - 1, CMARK_OPT_DEFAULT);
 	String new_string;
-	new_string.parse_utf8(new_string_bytes.ptr(), new_string_bytes.size());
+	new_string.parse_utf8(cmark_bytes);
+	free(cmark_bytes);
 	json_data->set_data(new_string);
 	return ResourceSaver::save(p_save_path + ".res", json_data);
 }
