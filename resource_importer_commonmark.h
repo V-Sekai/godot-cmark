@@ -34,6 +34,7 @@
 #include "core/io/resource_importer.h"
 #include "core/io/resource_saver.h"
 #include "core/object/class_db.h"
+#include "core/object/object.h"
 
 class CommonmarkData : public Resource {
 	GDCLASS(CommonmarkData, Resource);
@@ -46,8 +47,8 @@ protected:
 		ClassDB::bind_method(D_METHOD("get_commonmark"), &CommonmarkData::get_commonmark);
 		ClassDB::bind_method(D_METHOD("get_html"), &CommonmarkData::get_html);
 
-		ADD_PROPERTY(PropertyInfo(Variant::STRING, "html"), "", "get_html");
-		ADD_PROPERTY(PropertyInfo(Variant::STRING, "commonmark", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR), "set_commonmark", "get_commonmark");
+		ADD_PROPERTY(PropertyInfo(Variant::STRING, "html", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR), "", "get_html");
+		ADD_PROPERTY(PropertyInfo(Variant::STRING, "commonmark", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_INTERNAL), "set_commonmark", "get_commonmark");
 	}
 
 public:
