@@ -33,41 +33,27 @@
 #include "core/io/json.h"
 #include "core/io/resource_importer.h"
 #include "core/io/resource_saver.h"
+#include "core/object/class_db.h"
 
 class CommonmarkData : public Resource {
 	GDCLASS(CommonmarkData, Resource);
-	Variant data;
+	String commonmark;
 
 protected:
 	static void _bind_methods() {
 
-		ClassDB::bind_method(D_METHOD("set_data", "data"), &CommonmarkData::set_data);
-		ClassDB::bind_method(D_METHOD("get_data"), &CommonmarkData::get_data);
 		ClassDB::bind_method(D_METHOD("set_commonmark", "markdown"), &CommonmarkData::set_commonmark);
 		ClassDB::bind_method(D_METHOD("get_commonmark"), &CommonmarkData::get_commonmark);
+		ClassDB::bind_method(D_METHOD("get_html"), &CommonmarkData::get_html);
 
-		ADD_PROPERTY(PropertyInfo(Variant::NIL, "data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_NIL_IS_VARIANT), "set_data", "get_data");
-		ADD_PROPERTY(PropertyInfo(Variant::STRING, "commonmark", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR), "set_json", "get_json");
+		ADD_PROPERTY(PropertyInfo(Variant::STRING, "html"), "", "get_html");
+		ADD_PROPERTY(PropertyInfo(Variant::STRING, "commonmark"), "set_json", "get_json");
 	}
 
 public:
-	Variant get_data() const {
-		return data;
-	}
-	void set_data(Variant p_data) {
-		data = p_data;
-	}
-	String get_commonmark() const {
-		return JSON::print(get_data());
-	}
-	void set_commonmark(const String p_string) {
-		Variant new_data;
-		String error_string;
-		int error_line = 0;
-		int err = JSON::parse(p_string, new_data, error_string, error_line);
-		ERR_FAIL_COND_MSG(err != OK, "Can not parse Commonmark: " + error_string + " on line " + rtos(error_line));
-		set_data(new_data);
-	}
+	String get_html();
+	String get_commonmark() const;
+	void set_commonmark(const String p_string);
 	CommonmarkData() {}
 	~CommonmarkData() {}
 };

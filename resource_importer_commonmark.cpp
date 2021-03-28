@@ -75,10 +75,27 @@ Error ResourceImporterCommonmark::import(const String &p_source_file, const Stri
 
 	FileAccess *file = FileAccess::create(FileAccess::ACCESS_RESOURCES);
 	Error err;
-	Vector<uint8_t> string_bytes = file->get_file_as_string(p_source_file, &err).to_utf8_buffer();
-	ERR_FAIL_COND_V_MSG(err != OK, FAILED, "Can not open Commonmark file.");
+	String commonmark = file->get_file_as_string(p_source_file, &err);
+	ERR_FAIL_COND_V(err != OK, FAILED);
 	Ref<CommonmarkData> json_data;
 	json_data.instance();
+	json_data->set_commonmark(commonmark);
+	return ResourceSaver::save(p_save_path + ".res", json_data);
+}
+
+String CommonmarkData::get_commonmark() const {
+	return get_commonmark();
+}
+
+void CommonmarkData::set_commonmark(const String p_string) {
+	commonmark = p_string;
+}
+
+String CommonmarkData::get_html() {
+	if (commonmark.is_empty()) {
+		return String();
+	}
+	Vector<uint8_t> string_bytes = commonmark.to_utf8_buffer();
 	String error_string;
 	int error_line;
 	Variant data;
@@ -86,6 +103,5 @@ Error ResourceImporterCommonmark::import(const String &p_source_file, const Stri
 	String new_string;
 	new_string.parse_utf8(cmark_bytes);
 	free(cmark_bytes);
-	json_data->set_data(new_string);
-	return ResourceSaver::save(p_save_path + ".res", json_data);
+	return new_string;
 }
