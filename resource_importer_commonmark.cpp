@@ -48,11 +48,11 @@ bool ResourceImporterCommonmark::get_option_visibility(const String &p_option, c
 }
 
 String ResourceImporterCommonmark::get_importer_name() const {
-	return "Markdown";
+	return "Commonmark";
 }
 
 String ResourceImporterCommonmark::get_visible_name() const {
-	return "Markdown";
+	return "Commonmark";
 }
 
 void ResourceImporterCommonmark::get_recognized_extensions(List<String> *p_extensions) const {
