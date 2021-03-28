@@ -53,7 +53,7 @@ protected:
 public:
 	String get_html() const;
 	void set_html(String p_string);
-	static String convert_commonmark(const String p_string);
+	String convert_commonmark(const String p_string);
 	CommonmarkData() {}
 	~CommonmarkData() {}
 };
