@@ -45,8 +45,9 @@ protected:
 
 		ClassDB::bind_method(D_METHOD("set_html", "html"), &CommonmarkData::set_html);
 		ClassDB::bind_method(D_METHOD("get_html"), &CommonmarkData::get_html);
+		ClassDB::bind_method(D_METHOD("convert_commonmark"), &CommonmarkData::convert_commonmark);
 
-		ADD_PROPERTY(PropertyInfo(Variant::STRING, "html", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR), "set_html", "get_html");
+		ADD_PROPERTY(PropertyInfo(Variant::STRING, "html"), "set_html", "get_html");
 	}
 
 public:
