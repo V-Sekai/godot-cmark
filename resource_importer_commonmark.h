@@ -38,23 +38,21 @@
 
 class CommonmarkData : public Resource {
 	GDCLASS(CommonmarkData, Resource);
-	String commonmark;
+	String html;
 
 protected:
 	static void _bind_methods() {
 
-		ClassDB::bind_method(D_METHOD("set_commonmark", "commonmark"), &CommonmarkData::set_commonmark);
-		ClassDB::bind_method(D_METHOD("get_commonmark"), &CommonmarkData::get_commonmark);
+		ClassDB::bind_method(D_METHOD("set_html", "html"), &CommonmarkData::set_html);
 		ClassDB::bind_method(D_METHOD("get_html"), &CommonmarkData::get_html);
 
-		ADD_PROPERTY(PropertyInfo(Variant::STRING, "html", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR), "", "get_html");
-		ADD_PROPERTY(PropertyInfo(Variant::STRING, "commonmark", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_INTERNAL), "set_commonmark", "get_commonmark");
+		ADD_PROPERTY(PropertyInfo(Variant::STRING, "html", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR), "set_html", "get_html");
 	}
 
 public:
-	String get_html();
-	String get_commonmark() const;
-	void set_commonmark(const String p_string);
+	String get_html() const;
+	void set_html(String p_string);
+	static String convert_commonmark(const String p_string);
 	CommonmarkData() {}
 	~CommonmarkData() {}
 };

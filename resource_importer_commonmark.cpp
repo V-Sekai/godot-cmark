@@ -79,20 +79,20 @@ Error ResourceImporterCommonmark::import(const String &p_source_file, const Stri
 	ERR_FAIL_COND_V(err != OK, FAILED);
 	Ref<CommonmarkData> commonmark_data;
 	commonmark_data.instance();
-	commonmark_data->set_commonmark(commonmark);
+	commonmark_data->set_html(CommonmarkData::convert_commonmark(commonmark));
 	return ResourceSaver::save(p_save_path + ".res", commonmark_data);
 }
 
-String CommonmarkData::get_commonmark() const {
-	return commonmark;
+String CommonmarkData::get_html() const {
+	return html;
 }
 
-void CommonmarkData::set_commonmark(const String p_string) {
-	commonmark = p_string;
+void CommonmarkData::set_html(const String p_string) {
+	html = p_string;
 }
 
-String CommonmarkData::get_html() {
-	Vector<uint8_t> string_bytes = commonmark.to_utf8_buffer();
+String CommonmarkData::convert_commonmark(String p_string) {
+	Vector<uint8_t> string_bytes = p_string.to_utf8_buffer();
 	char *cmark_bytes = cmark_markdown_to_html((const char *)string_bytes.ptr(), string_bytes.size() - 1, CMARK_OPT_DEFAULT);
 	String new_string;
 	new_string.parse_utf8(cmark_bytes);
