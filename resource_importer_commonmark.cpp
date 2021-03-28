@@ -92,13 +92,12 @@ void CommonmarkData::set_commonmark(const String p_string) {
 }
 
 String CommonmarkData::get_html() {
-	if (commonmark.is_empty()) {
-		return String();
-	}
 	Vector<uint8_t> string_bytes = commonmark.to_utf8_buffer();
 	char *cmark_bytes = cmark_markdown_to_html((const char *)string_bytes.ptr(), string_bytes.size() - 1, CMARK_OPT_DEFAULT);
 	String new_string;
 	new_string.parse_utf8(cmark_bytes);
-	free(cmark_bytes);
+	if (cmark_bytes) {
+		free(cmark_bytes);
+	}
 	return new_string;
 }
