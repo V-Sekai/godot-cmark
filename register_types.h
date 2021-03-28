@@ -31,7 +31,7 @@
 #ifndef RESOURCE_IMPORTER_JSON_REGISTER_TYPES
 #define RESOURCE_IMPORTER_JSON_REGISTER_TYPES
 
-void register_json_types();
-void unregister_json_types();
+void register_cmark_gfm_types();
+void unregister_cmark_gfm_types();
 
 #endif
