@@ -77,14 +77,14 @@ Error ResourceImporterCommonmark::import(const String &p_source_file, const Stri
 	Error err;
 	String commonmark = file->get_file_as_string(p_source_file, &err);
 	ERR_FAIL_COND_V(err != OK, FAILED);
-	Ref<CommonmarkData> json_data;
-	json_data.instance();
-	json_data->set_commonmark(commonmark);
-	return ResourceSaver::save(p_save_path + ".res", json_data);
+	Ref<CommonmarkData> commonmark_data;
+	commonmark_data.instance();
+	commonmark_data->set_commonmark(commonmark);
+	return ResourceSaver::save(p_save_path + ".res", commonmark_data);
 }
 
 String CommonmarkData::get_commonmark() const {
-	return get_commonmark();
+	return commonmark;
 }
 
 void CommonmarkData::set_commonmark(const String p_string) {
