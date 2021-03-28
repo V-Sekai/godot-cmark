@@ -34,20 +34,20 @@
 #include "core/io/resource_importer.h"
 #include "core/io/resource_saver.h"
 
-class JSONData : public Resource {
-	GDCLASS(JSONData, Resource);
+class CommonmarkData : public Resource {
+	GDCLASS(CommonmarkData, Resource);
 	Variant data;
 
 protected:
 	static void _bind_methods() {
 
-		ClassDB::bind_method(D_METHOD("set_data", "data"), &JSONData::set_data);
-		ClassDB::bind_method(D_METHOD("get_data"), &JSONData::get_data);
-		ClassDB::bind_method(D_METHOD("set_json", "json"), &JSONData::set_json);
-		ClassDB::bind_method(D_METHOD("get_json"), &JSONData::get_json);
+		ClassDB::bind_method(D_METHOD("set_data", "data"), &CommonmarkData::set_data);
+		ClassDB::bind_method(D_METHOD("get_data"), &CommonmarkData::get_data);
+		ClassDB::bind_method(D_METHOD("set_commonmark", "markdown"), &CommonmarkData::set_commonmark);
+		ClassDB::bind_method(D_METHOD("get_commonmark"), &CommonmarkData::get_commonmark);
 
 		ADD_PROPERTY(PropertyInfo(Variant::NIL, "data", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_NIL_IS_VARIANT), "set_data", "get_data");
-		ADD_PROPERTY(PropertyInfo(Variant::STRING, "json", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR), "set_json", "get_json");
+		ADD_PROPERTY(PropertyInfo(Variant::STRING, "commonmark", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR), "set_json", "get_json");
 	}
 
 public:
@@ -57,46 +57,46 @@ public:
 	void set_data(Variant p_data) {
 		data = p_data;
 	}
-	String get_json() const {
+	String get_commonmark() const {
 		return JSON::print(get_data());
 	}
-	void set_json(const String p_string) {
+	void set_commonmark(const String p_string) {
 		Variant new_data;
 		String error_string;
 		int error_line = 0;
 		int err = JSON::parse(p_string, new_data, error_string, error_line);
-		ERR_FAIL_COND_MSG(err != OK, "Can not parse JSON: " + error_string + " on line " + rtos(error_line));
+		ERR_FAIL_COND_MSG(err != OK, "Can not parse Commonmark: " + error_string + " on line " + rtos(error_line));
 		set_data(new_data);
 	}
-	JSONData() {}
-	~JSONData() {}
+	CommonmarkData() {}
+	~CommonmarkData() {}
 };
 
-class ResourceImporterJSON : public ResourceImporter {
-	GDCLASS(ResourceImporterJSON, ResourceImporter);
+class ResourceImporterCommonmark : public ResourceImporter {
+	GDCLASS(ResourceImporterCommonmark, ResourceImporter);
 
 public:
-	virtual String get_importer_name() const;
-	virtual String get_visible_name() const;
-	virtual void get_recognized_extensions(List<String> *p_extensions) const;
-	virtual String get_save_extension() const;
-	virtual String get_resource_type() const;
+	virtual String get_importer_name() const override;
+	virtual String get_visible_name() const override;
+	virtual void get_recognized_extensions(List<String> *p_extensions) const override;
+	virtual String get_save_extension() const override;
+	virtual String get_resource_type() const override;
 
-	virtual int get_preset_count() const;
-	virtual String get_preset_name(int p_idx) const;
+	virtual int get_preset_count() const override;
+	virtual String get_preset_name(int p_idx) const override;
 
 	virtual void get_import_options(List<ImportOption> *r_options,
-			int p_preset = 0) const;
+			int p_preset = 0) const override;
 	virtual bool
 	get_option_visibility(const String &p_option,
-			const Map<StringName, Variant> &p_options) const;
+			const Map<StringName, Variant> &p_options) const override;
 	virtual Error import(const String &p_source_file, const String &p_save_path,
 			const Map<StringName, Variant> &p_options,
 			List<String> *r_platform_variants,
 			List<String> *r_gen_files = NULL,
-			Variant *r_metadata = NULL);
+			Variant *r_metadata = NULL) override;
 
-	ResourceImporterJSON() {}
-	~ResourceImporterJSON() {}
+	ResourceImporterCommonmark() {}
+	~ResourceImporterCommonmark() {}
 };
 #endif // RESOURCE_IMPORTER_LOTTIE
