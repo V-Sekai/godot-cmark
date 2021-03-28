@@ -42,7 +42,7 @@ class CommonmarkData : public Resource {
 protected:
 	static void _bind_methods() {
 
-		ClassDB::bind_method(D_METHOD("set_commonmark", "markdown"), &CommonmarkData::set_commonmark);
+		ClassDB::bind_method(D_METHOD("set_commonmark", "commonmark"), &CommonmarkData::set_commonmark);
 		ClassDB::bind_method(D_METHOD("get_commonmark"), &CommonmarkData::get_commonmark);
 		ClassDB::bind_method(D_METHOD("get_html"), &CommonmarkData::get_html);
 
