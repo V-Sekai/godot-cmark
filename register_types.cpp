@@ -32,12 +32,12 @@
 #include "core/io/resource_importer.h"
 #include "resource_importer_commonmark.h"
 
-void register_cmark_gfm_types() {
+void register_cmark_types() {
 	ClassDB::register_class<CommonmarkData>();
 	Ref<ResourceImporterCommonmark> json_data;
 	json_data.instance();
 	ResourceFormatImporter::get_singleton()->add_importer(json_data);
 }
 
-void unregister_cmark_gfm_types() {
+void unregister_cmark_types() {
 }
