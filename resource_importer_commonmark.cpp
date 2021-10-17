@@ -78,7 +78,7 @@ Error ResourceImporterCommonmark::import(const String &p_source_file, const Stri
 	String commonmark = file->get_file_as_string(p_source_file, &err);
 	ERR_FAIL_COND_V(err != OK, FAILED);
 	Ref<CommonmarkData> commonmark_data;
-	commonmark_data.instance();
+	commonmark_data.instantiate();
 	commonmark_data->set_html(commonmark_data->convert_commonmark(commonmark));
 	return ResourceSaver::save(p_save_path + ".res", commonmark_data);
 }

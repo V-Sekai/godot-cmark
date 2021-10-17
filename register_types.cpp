@@ -35,7 +35,7 @@
 void register_cmark_types() {
 	ClassDB::register_class<CommonmarkData>();
 	Ref<ResourceImporterCommonmark> json_data;
-	json_data.instance();
+	json_data.instantiate();
 	ResourceFormatImporter::get_singleton()->add_importer(json_data);
 }
 
